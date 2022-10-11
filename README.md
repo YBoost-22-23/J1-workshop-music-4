@@ -3,7 +3,7 @@ YBoost workshop #4 | 12/10/2022
 
 # Streaming plateform
 
-## Objectif :
+## Objective :
 You have to create the new Youtube ! Design a new video streaming platform with functionnalities that you want to see in current Youtube. Redraw the interface and be inventive ! 
 
 ## Notion :
