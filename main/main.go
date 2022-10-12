@@ -3,9 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"google.golang.org/api/youtube/v3"
+	"html/template"
 	"log"
 	"net/http"
+
+	"google.golang.org/api/youtube/v3"
 
 	"google.golang.org/api/googleapi/transport"
 )
@@ -55,6 +57,11 @@ func main() {
 	printIDs("Videos", videos)
 	printIDs("Channel", channels)
 	printIDs("Playlist", playlists)
+
+	//Demarrage du Serveur
+	fmt.Println("localhost:8080")
+	http.HandleFunc("/home", MainPage)
+	http.ListenAndServe(":8080", nil)
 }
 
 // Print the ID and title of each result in a list as well as a name that
@@ -76,4 +83,14 @@ func handleError(err error, message string) {
 	if err != nil {
 		log.Fatalf(message+": %v", err.Error())
 	}
+}
+
+func MainPage(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("./web/MainPage.html", "./web/index.css")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	tmpl.Execute(w, "")
 }
