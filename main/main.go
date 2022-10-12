@@ -1,18 +1,16 @@
 package main
 
 import (
-	"flag"
-	"fmt"
-	"log"
-	"net/http"
-
-	"google.golang.org/api/youtube/v3"
-
-	"google.golang.org/api/googleapi/transport"
+	"streaming"
 )
 
+func main() {
+	streaming.Search()
+}
+
+/*
 var (
-	query      = flag.String("query", "Ynov lyon", "Search term")
+	query      = flag.String("query", "Ynov", "Search term")
 	maxResults = flag.Int64("max-results", 100, "Max YouTube results")
 )
 
@@ -78,3 +76,4 @@ func handleError(err error, message string) {
 		log.Fatalf(message+": %v", err.Error())
 	}
 }
+*/
