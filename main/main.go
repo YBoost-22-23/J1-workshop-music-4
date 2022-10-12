@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"google.golang.org/api/youtube/v3"
 	"log"
 	"net/http"
+
+	"google.golang.org/api/youtube/v3"
 
 	"google.golang.org/api/googleapi/transport"
 )
