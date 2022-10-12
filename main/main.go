@@ -87,11 +87,13 @@ func handleError(err error, message string) {
 }
 
 func MainPage(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("./web/MainPage.html", "./web/index.css")
+	tmpl, err := template.ParseFiles("./web/MainPage.html", "./web/index.html")
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+
+	r.ParseForm()
 
 	src_barre := r.FormValue("srch")
 	fmt.Println(src_barre)
@@ -100,7 +102,7 @@ func MainPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func SearchPage(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("./web/MainPage.html", "./web/index.css")
+	tmpl, err := template.ParseFiles("./web/MainPage.html", "./web/index.html")
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
