@@ -1,0 +1,9 @@
+#body {
+    background-image: url("Images/desktop.jpeg");
+    background-repeat: no-repeat;
+}
+
+#title {
+    color: gold;
+    text-align: center;
+}
