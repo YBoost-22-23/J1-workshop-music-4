@@ -60,7 +60,7 @@ func main() {
 
 	//Demarrage du Serveur
 	fmt.Println("localhost:8080")
-	http.HandleFunc("/home", MainPage())
+	http.HandleFunc("/home", MainPage)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -86,10 +86,11 @@ func handleError(err error, message string) {
 }
 
 func MainPage(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("./MainPage.html", "./index.html")
+	tmpl, err := template.ParseFiles("./web/MainPage.html", "./web/index.css")
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+
 	tmpl.Execute(w, "")
 }
