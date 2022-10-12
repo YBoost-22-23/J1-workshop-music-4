@@ -61,6 +61,7 @@ func main() {
 	//Demarrage du Serveur
 	fmt.Println("localhost:8080")
 	http.HandleFunc("/home", MainPage)
+	http.HandleFunc("/search", SearchPage)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -91,6 +92,22 @@ func MainPage(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+
+	src_barre := r.FormValue("srch")
+	fmt.Println(src_barre)
+
+	tmpl.Execute(w, "")
+}
+
+func SearchPage(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("./web/MainPage.html", "./web/index.css")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	src_barre := r.FormValue("srch")
+	fmt.Println(src_barre)
 
 	tmpl.Execute(w, "")
 }
