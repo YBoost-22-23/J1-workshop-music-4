@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
 
 #body {
-    background-image: url("Images/desktop.jpeg");
+    background-image: url("/static/Images/desktop.jpeg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;

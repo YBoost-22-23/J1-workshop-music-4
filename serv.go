@@ -12,6 +12,12 @@ import (
 	"google.golang.org/api/googleapi/transport"
 )
 
+type vid_ytb struct {
+	Video    string `json:"video"`
+	Channel  string `json:"channel"`
+	Playlist string `json:"playlist"`
+}
+
 var (
 	query      = flag.String("query", "Ynov lyon", "Search term")
 	maxResults = flag.Int64("max-results", 100, "Max YouTube results")
@@ -20,6 +26,38 @@ var (
 const developerKey = "AIzaSyDsqSDIuvZC3PDglfoQkLQO8_As00il0D0"
 
 func main() {
+	//Demarrage du Serveur
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+	http.HandleFunc("/home", MainPage)
+	http.HandleFunc("/Search", SearchPage)
+	fmt.Println("http://localhost:8080/home")
+
+	http.ListenAndServe(":8080", nil)
+}
+
+func MainPage(w http.ResponseWriter, r *http.Request) {
+	tmpl1, err := template.ParseFiles("MainPage.html")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	tmpl1.Execute(w, "")
+}
+
+func SearchPage(w http.ResponseWriter, r *http.Request) {
+	tmpl1, err := template.ParseFiles("SearchPage.html")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	tmpl1.Execute(w, GetMainPageData())
+}
+
+func GetMainPageData() []vid_ytb {
 	flag.Parse()
 
 	client := &http.Client{
@@ -39,6 +77,7 @@ func main() {
 	handleError(err, "")
 
 	// Group video, channel, and playlist results in separate lists.
+
 	videos := make(map[string]string)
 	channels := make(map[string]string)
 	playlists := make(map[string]string)
@@ -54,15 +93,25 @@ func main() {
 			playlists[item.Id.PlaylistId] = item.Snippet.Title
 		}
 	}
-	printIDs("Videos", videos)
-	printIDs("Channel", channels)
-	printIDs("Playlist", playlists)
 
-	//Demarrage du Serveur
-	fmt.Println("localhost:8080")
-	http.HandleFunc("/home", MainPage)
-	http.HandleFunc("/search", SearchPage)
-	http.ListenAndServe(":8080", nil)
+	var video_list []vid_ytb
+	var video_ytb vid_ytb
+
+	ind := 0
+	for _, i := range videos {
+		index := 0
+		for j := 0; j < len(i); j++ {
+			if i[j] == '|' {
+				index = j
+			}
+		}
+		video_ytb.Video = i[:len(i)-(len(i)-index+1)]
+		video_ytb.Channel = i[index+2:]
+		video_ytb.Playlist = "None"
+		video_list = append(video_list, video_ytb)
+		ind++
+	}
+	return video_list
 }
 
 // Print the ID and title of each result in a list as well as a name that
@@ -84,32 +133,4 @@ func handleError(err error, message string) {
 	if err != nil {
 		log.Fatalf(message+": %v", err.Error())
 	}
-}
-
-func MainPage(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("./web/MainPage.html", "./web/index.html")
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-
-	r.ParseForm()
-
-	src_barre := r.FormValue("srch")
-	fmt.Println(src_barre)
-
-	tmpl.Execute(w, "")
-}
-
-func SearchPage(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("./web/MainPage.html", "./web/index.html")
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-
-	src_barre := r.FormValue("srch")
-	fmt.Println(src_barre)
-
-	tmpl.Execute(w, "")
 }
