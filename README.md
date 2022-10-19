@@ -1,7 +1,7 @@
 # workshop-music-4
 YBoost workshop #4 | 12/10/2022
 
-# Streaming plateform
+# Streaming platform
 
 ## Objective :
 You have to create the new Youtube ! Design a new video streaming platform with functionnalities that you want to see in current Youtube. Redraw the interface and be inventive ! 
@@ -44,3 +44,11 @@ Create a good display for your videos.
 
 ## What is an API ?
 An API is an interface that allows you to retrieve data from a website. API are set up by developers to allow other developers to use their data and make applications with it.
+
+## ORGANISATION PROPOSITION
+
+Dev 1 (easy) : Concept and create the interface of the app  
+Dev 2 (easy) : Create the new song player (optimize the UX of YTB music for example)  
+Dev 3 (medium -) : Get and display all videos according to the front of the app  
+Dev 4 (hard) : Recreate the video uploader using tools previously presented  
+Dev 5 (hard) : Create a script which displays video recommendations based on the one currently playing  
